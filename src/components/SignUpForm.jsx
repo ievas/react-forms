@@ -12,7 +12,18 @@ function SignUpForm({token, setToken}){
     let [isSignedUp, setIsSignedUp] = useState(false)
 
     async function handleSubmit(e){
+        
         e.preventDefault();
+
+        if (password.length < 8) {
+            setErrorMessage("Password must be at least 8 characters long");
+            return;
+        }
+
+        if (username.length < 4) {
+            setErrorMessage("Username must be at least 4 characters long");
+            return;
+        }
        
         try {
             let response = await fetch('https://fsa-jwt-practice.herokuapp.com/signup', 
@@ -32,10 +43,8 @@ function SignUpForm({token, setToken}){
             setToken(result.token);
             setUsername('');
             setPassword('');
+            setErrorMessage('');
             setIsSignedUp(true);
-            // setSignUpMessage(
-            //     <>Please, authenticate the token!</>
-            //     );
 
         } catch(e) {
             setErrorMessage(e.message)
@@ -46,7 +55,7 @@ function SignUpForm({token, setToken}){
 
     return <>
         
-        {errorMessage && <><p>{errorMessage}</p><button>Back</button></>}
+        {errorMessage && <><p>{errorMessage}</p></>}
         {/* {signUpMessage && <h3>{signUpMessage}</h3>} */}
         
            {!isSignedUp &&
