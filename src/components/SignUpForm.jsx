@@ -31,7 +31,9 @@ function SignUpForm({setToken}){
             setUsername('');
             setPassword('');
             setIsSignedUp(true);
-            setSignUpMessage('You are now signed up. Please, authenticate the token!');
+            setSignUpMessage(
+                <>Hi, <span className="greeting">{username}</span>! You are now signed up. Please, authenticate the token!</>
+                );
 
 
 

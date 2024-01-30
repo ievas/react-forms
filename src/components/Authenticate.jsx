@@ -7,6 +7,8 @@ function Authenticate({token}){
 
     let [errorMessage, setErrorMessage] = useState(null)
 
+    let [isAuthenticated, setIsAuthenticated] = useState(false)
+
     async function handleClick (){
 
         try {
@@ -23,6 +25,7 @@ function Authenticate({token}){
             let result = await response.json();
     
             setSuccesMessage(result.message);
+            setIsAuthenticated(true)
 
         } catch (e) {
             setErrorMessage(e.message)
@@ -34,8 +37,8 @@ function Authenticate({token}){
 
 
         {/* <h2>Authenticate</h2> */}
-
-        <button onClick={handleClick}>authenticate token</button>
+        {!isAuthenticated && <button onClick={handleClick}>authenticate token</button>}
+        
         {successMessage && <p>{successMessage}</p>}
         {errorMessage && <p>{errorMessage}</p>}
     </>
