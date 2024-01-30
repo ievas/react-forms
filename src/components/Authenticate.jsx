@@ -3,11 +3,13 @@ import { useState } from "react"
 
 function Authenticate({token}){
 
-    let [successMessage, setSuccesMessage] = useState(null)
+    let [successMessage, setSuccessMessage] = useState(null)
 
     let [errorMessage, setErrorMessage] = useState(null)
 
     let [isAuthenticated, setIsAuthenticated] = useState(false)
+
+    let [username, setUsername] = useState('')
 
     async function handleClick (){
 
@@ -24,8 +26,9 @@ function Authenticate({token}){
     
             let result = await response.json();
     
-            setSuccesMessage(result.message);
-            setIsAuthenticated(true)
+            setSuccessMessage(result.message);
+            setIsAuthenticated(true);
+            setUsername(result.data.username.username);
 
         } catch (e) {
             setErrorMessage(e.message)
@@ -38,7 +41,7 @@ function Authenticate({token}){
 
         {/* <h2>Authenticate</h2> */}
         {!isAuthenticated && <button onClick={handleClick}>authenticate token</button>}
-        
+        {username && <h3>Hi, <span className="greeting">{username}</span>!</h3>}
         {successMessage && <p>{successMessage}</p>}
         {errorMessage && <p>{errorMessage}</p>}
     </>
